@@ -1,0 +1,84 @@
+{
+  "name": "new-admin-frontend",
+  "version": "0.1.0",
+  "author": "DA:Ground",
+  "private": true,
+  "dependencies": {
+    "@aws-amplify/ui-react": "^1.2.15",
+    "@aws-sdk/client-cognito-identity-provider": "^3.31.0",
+    "@emotion/cache": "^11.4.0",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@material-ui/core": "5.0.0-alpha.34",
+    "@material-ui/icons": "5.0.0-alpha.34",
+    "@material-ui/lab": "5.0.0-alpha.34",
+    "@material-ui/system": "5.0.0-alpha.34",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.10",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
+    "amazon-cognito-identity-js": "^5.1.0",
+    "aws-amplify": "^4.2.9",
+    "aws-get-credentials": "^2.0.0",
+    "aws-sdk": "^2.989.0",
+    "axios": "^0.21.4",
+    "cross-env": "^7.0.3",
+    "date-fns": "^2.21.3",
+    "gray-matter": "^4.0.3",
+    "highcharts": "^9.3.1",
+    "history": "^5.0.1",
+    "jwt-decode": "^3.1.2",
+    "mobx": "^6.3.3",
+    "mobx-react": "^7.2.0",
+    "node-sass": "^6.0.1",
+    "nprogress": "^0.2.0",
+    "numeral": "^2.0.6",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-countdown": "^2.3.2",
+    "react-dom": "^17.0.1",
+    "react-hot-toast": "^1.0.2",
+    "react-modal-image": "^2.5.0",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-query": "^3.21.1",
+    "react-quill": "^1.3.5",
+    "react-router": "^6.0.0-beta.0",
+    "react-router-dom": "^6.0.0-beta.0",
+    "react-scripts": "^4.0.1",
+    "stylis": "^4.0.10",
+    "typescript": "^4.2.4",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "cross-env NODE_PATH=src react-scripts start",
+    "build": "cross-env NODE_PATH=src react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.8"
+  }
+}
