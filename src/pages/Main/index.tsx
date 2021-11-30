@@ -63,7 +63,7 @@ const MainPage: FC = observer(() => {
           liveData={{ pair: 'BTC-USDT', interval: 1 }}
           lg={true}
         />
-        <Chart
+        {/* <Chart
           title={Coin.ETH_USDT}
           data={settings.ethData}
           socket={ethSocket}
@@ -135,7 +135,7 @@ const MainPage: FC = observer(() => {
           data={settings.xrpData}
           socket={xrpSocket}
           liveData={{ pair: 'XRP-USDT', interval: 1 }}
-        />
+        /> */}
       </Grid>
     </Box>
   );

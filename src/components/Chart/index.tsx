@@ -40,8 +40,6 @@ const Chart: FC<PropsData> = observer((props) => {
   const [indicatorVisible, setIndicatorVisible] = useState<boolean>(false);
   const [isSec, setIsSec] = useState<boolean>(true);
 
-  useEffect(() => console.log(mockUp), []);
-
   let candleOptions = {
     // rangeSelector: {
     //   selected: 1,
@@ -111,6 +109,7 @@ const Chart: FC<PropsData> = observer((props) => {
     },
     series: [
       {
+        name: 'Spread',
         type: 'hollowcandlestick',
         data: (function () {
           var ohlcData = [];
@@ -127,6 +126,7 @@ const Chart: FC<PropsData> = observer((props) => {
         })(),
       },
       {
+        name: 'Volume',
         type: 'column',
         data: (function () {
           var columnData = [];
@@ -146,7 +146,7 @@ const Chart: FC<PropsData> = observer((props) => {
 
   const options = {
     chart: {
-      height: 320,
+      height: 600,
       events: {
         load: function () {
           chartComponent.current?.chart.showLoading('Loading...');
@@ -191,26 +191,26 @@ const Chart: FC<PropsData> = observer((props) => {
           menuItems: ['viewFullscreen'],
         },
         indicatorAll: {
-          text: 'Indicator',
+          text: 'All',
           onclick: () => {
             setIndicatorVisible(!indicatorVisible);
           },
         },
-        a: {
-          text: 'a',
-          onclick: function () {
+        bot1: {
+          text: 'Bot 3',
+          onclick: () => {
             alert('You pressed the button!');
           },
         },
-        b: {
-          text: 'b',
-          onclick: function () {
+        bot2: {
+          text: 'Bot 2',
+          onclick: () => {
             alert('You pressed another button!');
           },
         },
-        c: {
-          text: 'c',
-          onclick: function () {
+        bot3: {
+          text: 'Bot 1',
+          onclick: () => {
             alert('You pressed other button!');
           },
         },
@@ -220,8 +220,8 @@ const Chart: FC<PropsData> = observer((props) => {
       height: 25,
     },
     rangeSelector: {
-      // allButtonsEnabled: true,
-      // inputEnabled: false,
+      allButtonsEnabled: true,
+      inputEnabled: false,
       buttons: [
         {
           type: 'minute',
@@ -318,36 +318,40 @@ const Chart: FC<PropsData> = observer((props) => {
       //   },
       // },
     },
-    // yAxis: [
-    //   // {
-    //   //   title: {
-    //   //     text: '',
-    //   //   },
-    //   //   height: '60%',
-    //   //   lineWidth: 2,
-    //   //   resize: {
-    //   //     enabled: true,
-    //   //   },
-    //   // },
-    //   // {
-    //   //   // labels: {
-    //   //   //   align: 'right',
-    //   //   //   x: -3,
-    //   //   // },
-    //   //   title: {
-    //   //     text: '',
-    //   //   },
-    //   //   top: '65%',
-    //   //   height: '35%',
-    //   //   offset: 0,
-    //   //   lineWidth: 2,
-    //   // },
-    // ],
+    yAxis: [
+      {
+        title: {
+          text: 'Spread',
+        },
+        //   height: '70%',
+        //   lineWidth: 1,
+        //   resize: {  분리했을 때 움직일 수 있는 기능
+        //     enabled: true,
+        //   },
+      },
+      {
+        opposite: false,
+        title: {
+          text: 'Volume',
+          // style: {
+          //   color: 'blue',
+          // },
+        },
+        labels: {
+          align: 'left',
+          x: -5,
+          // format: '{value} mm',
+          // style: {
+          //   color: 'blue',
+          // },
+        },
+      },
+    ],
     tooltip: {
       formatter: function () {
         return (
           'Open: ' +
-          this.points[0].point.options?.y +
+          this.points[0].y +
           '<br />' +
           'High: ' +
           this.points[0].point.options?.far_bid +
@@ -359,7 +363,7 @@ const Chart: FC<PropsData> = observer((props) => {
           this.points[0].point.options?.far_bid +
           '<br />' +
           '스프레드: ' +
-          this.points[0].point.options?.y +
+          this.points[0].y +
           '<br />' +
           '스프레드 비율: ' +
           this.points[0].point.options?.spread_ratio +
@@ -369,18 +373,20 @@ const Chart: FC<PropsData> = observer((props) => {
           '<br />' +
           '당분기물 가격: ' +
           this.points[0].point.options?.near_ask
+          // this.points[1]?.y && '<br />' + 'Volume: ' + this.points[1]?.y
         );
       },
     },
-    stockTools: {
-      gui: {
-        enabled: true,
-      },
-    },
+    // stockTools: {
+    //   gui: {
+    //     enabled: true,
+    //   },
+    // },
     series: [
       {
+        type: 'line',
         data: (function () {
-          var data = [],
+          let data = [],
             time = new Date().getTime(),
             i;
           for (i = -999; i <= 0; i += 1) {
@@ -399,31 +405,58 @@ const Chart: FC<PropsData> = observer((props) => {
           valueDecimals: 2,
         },
       },
-      // {
-      //   type: 'column',
-      //   data: (function () {
-      //     var columnData = [];
-      //     for (var i = 0; i < mockUp.length; i++) {
-      //       columnData.push([
-      //         mockUp[i][0], // the date
-      //         Math.round(Math.random() * 100), // the volume
-      //       ]);
-      //     }
-      //     return columnData;
-      //   })(),
-      //   yAxis: 1,
-      // },
+      {
+        type: 'column',
+        color: 'red',
+        data: (function () {
+          const columnData = [];
+          for (let i = -999; i <= 0; i += 1) {
+            columnData.push([
+              new Date().getTime(), // the date
+              0.1, // the volume
+            ]);
+          }
+          return columnData;
+        })(),
+        yAxis: 1,
+      },
     ],
     // responsive: {
     //   rules: [
     //     {
     //       condition: {
-    //         maxWidth: 800,
+    //         maxWidth: 500,
     //       },
     //       chartOptions: {
-    //         rangeSelector: {
-    //           inputEnabled: false,
+    //         legend: {
+    //           floating: false,
+    //           layout: 'horizontal',
+    //           align: 'center',
+    //           verticalAlign: 'bottom',
+    //           x: 0,
+    //           y: 0,
     //         },
+    //         yAxis: [
+    //           {
+    //             labels: {
+    //               align: 'right',
+    //               x: 0,
+    //               y: -6,
+    //             },
+    //             showLastLabel: false,
+    //           },
+    //           {
+    //             labels: {
+    //               align: 'left',
+    //               x: 0,
+    //               y: -6,
+    //             },
+    //             showLastLabel: false,
+    //           },
+    //           {
+    //             visible: false,
+    //           },
+    //         ],
     //       },
     //     },
     //   ],
@@ -495,7 +528,7 @@ const Chart: FC<PropsData> = observer((props) => {
   }, [indicatorVisible]);
 
   return (
-    <Grid item md={lg ? 6 : 3}>
+    <Grid item md={lg ? 12 : 3}>
       <HighchartsReact
         ref={chartComponent}
         highcharts={Highcharts}
