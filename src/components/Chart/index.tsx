@@ -318,31 +318,31 @@ const Chart: FC<PropsData> = observer((props) => {
       //   },
       // },
     },
-    yAxis: [
-      {
-        title: {
-          text: '',
-        },
-        height: '60%',
-        lineWidth: 2,
-        resize: {
-          enabled: true,
-        },
-      },
-      {
-        // labels: {
-        //   align: 'right',
-        //   x: -3,
-        // },
-        title: {
-          text: '',
-        },
-        top: '65%',
-        height: '35%',
-        offset: 0,
-        lineWidth: 2,
-      },
-    ],
+    // yAxis: [
+    //   // {
+    //   //   title: {
+    //   //     text: '',
+    //   //   },
+    //   //   height: '60%',
+    //   //   lineWidth: 2,
+    //   //   resize: {
+    //   //     enabled: true,
+    //   //   },
+    //   // },
+    //   // {
+    //   //   // labels: {
+    //   //   //   align: 'right',
+    //   //   //   x: -3,
+    //   //   // },
+    //   //   title: {
+    //   //     text: '',
+    //   //   },
+    //   //   top: '65%',
+    //   //   height: '35%',
+    //   //   offset: 0,
+    //   //   lineWidth: 2,
+    //   // },
+    // ],
     tooltip: {
       formatter: function () {
         return (
