@@ -52,11 +52,7 @@ const DashboardNavbar: FC<DashboardNavbarProps> = (props) => {
           <IconButton
             color='inherit'
             onClick={onSidebarMobileOpen}
-            sx={{
-              display: {
-                lg: 'none',
-              },
-            }}
+            sx={{ mr: 1 }}
           >
             <MenuIcon fontSize='small' />
           </IconButton>
@@ -80,7 +76,7 @@ const DashboardNavbar: FC<DashboardNavbarProps> = (props) => {
           </Link>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button variant='text' color='inherit' onClick={handleClickLogout}>
+          <Button variant='text' color='secondary' onClick={handleClickLogout}>
             로그아웃
           </Button>
           <UISettingsDrawer />

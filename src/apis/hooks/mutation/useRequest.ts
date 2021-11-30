@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import stores from '../../../stores/index';
+// import { io } from 'socket.io-client';
 
-const requestActions: any = {};
+const httpRequestActions: any = {};
 
 const getRequestAction = (requestAction, paramObj: null | object) => {
   if (paramObj) {
@@ -25,7 +26,11 @@ const postRequestAction = (requestAction, id) => {
   return requestAction;
 };
 
-const requestToSandbank = async ({
+const socket = new WebSocket(
+  process.env.REACT_APP_DOMAIN || 'ws://localhost:4041'
+);
+
+const httpRequestToSandbank = async ({
   method,
   path,
   accessToken = undefined,
@@ -55,7 +60,7 @@ const requestToSandbank = async ({
 };
 
 const useVerifyOtp = () =>
-  useMutation((req) => requestToSandbank(req as any), {
+  useMutation((req) => httpRequestToSandbank(req as any), {
     onSuccess: (res) => {
       console.log('onSuccess: useVerifyOtp');
       console.log(res);
@@ -68,4 +73,10 @@ const useVerifyOtp = () =>
 
 //dashboard
 
-export { requestActions, getRequestAction, postRequestAction, useVerifyOtp };
+export {
+  httpRequestActions,
+  getRequestAction,
+  postRequestAction,
+  useVerifyOtp,
+  socket,
+};

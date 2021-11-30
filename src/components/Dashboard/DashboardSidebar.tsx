@@ -17,12 +17,12 @@ import jwt_decode from 'jwt-decode';
 import toast from 'react-hot-toast';
 
 interface DashboardSidebarProps {
-  onMobileClose: () => void;
-  openMobile: boolean;
+  open: boolean;
+  onClose: () => void;
 }
 
 const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
-  const { onMobileClose, openMobile } = props;
+  const { open, onClose } = props;
   const location = useLocation();
   const { settings } = useStores();
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
@@ -38,12 +38,12 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
   const [, updateState] = useState<any>();
   const forceRender = useCallback(() => updateState({}), []);
 
-  useEffect(() => {
-    if (openMobile && onMobileClose) {
-      onMobileClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   if (openMobile && onMobileClose) {
+  //     onMobileClose();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -166,6 +166,10 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
           </Box>
         </Box>
         <Divider />
+        <Typography color='textPrimary' variant='h6' sx={{ p: 2 }}>
+          Menu
+        </Typography>
+        <Divider />
         <Box sx={{ p: 2 }}>
           {SidebarSection.map((section, idx) => (
             <NavSection
@@ -184,31 +188,31 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
     </Box>
   );
 
-  if (lgUp) {
-    return (
-      <Drawer
-        anchor='left'
-        open
-        PaperProps={{
-          sx: {
-            backgroundColor: 'background.paper',
-            height: 'calc(100% - 64px) !important',
-            top: '64px !Important',
-            width: 280,
-          },
-        }}
-        variant='permanent'
-      >
-        {content}
-      </Drawer>
-    );
-  }
+  // if (lgUp) {
+  //   return (
+  //     <Drawer
+  //       anchor='left'
+  //       open
+  //       PaperProps={{
+  //         sx: {
+  //           backgroundColor: 'background.paper',
+  //           height: 'calc(100% - 64px) !important',
+  //           top: '64px !Important',
+  //           width: 280,
+  //         },
+  //       }}
+  //       variant='permanent'
+  //     >
+  //       {content}
+  //     </Drawer>
+  //   );
+  // }
 
   return (
     <Drawer
       anchor='left'
-      onClose={onMobileClose}
-      open={openMobile}
+      open={open}
+      onClose={onClose}
       PaperProps={{
         sx: {
           backgroundColor: 'background.paper',
@@ -222,9 +226,9 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
   );
 };
 
-DashboardSidebar.propTypes = {
-  onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool,
-};
+// DashboardSidebar.propTypes = {
+//   onMobileClose: PropTypes.func,
+//   openMobile: PropTypes.bool,
+// };
 
 export default DashboardSidebar;
