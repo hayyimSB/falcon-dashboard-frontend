@@ -52,10 +52,10 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
       <DashboardNavbar
         onSidebarMobileOpen={(): void => setIsSidebarMobileOpen(true)}
       />
-      {/* <DashboardSidebar
-        onMobileClose={(): void => setIsSidebarMobileOpen(false)}
-        openMobile={isSidebarMobileOpen}
-      /> */}
+      <DashboardSidebar
+        open={isSidebarMobileOpen}
+        onClose={(): void => setIsSidebarMobileOpen(false)}
+      />
       <DashboardLayoutWrapper>
         <DashboardLayoutContainer>
           <DashboardLayoutContent>
