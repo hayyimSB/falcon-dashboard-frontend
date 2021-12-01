@@ -36,6 +36,8 @@
     "jwt-decode": "^3.1.2",
     "mobx": "^6.3.3",
     "mobx-react": "^7.2.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
     "node-sass": "^6.0.1",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",

@@ -6,20 +6,20 @@ export const PageTitle = {
   FALCON_DASHBOARD: 'Falcon Dashboard',
 };
 
-export enum Coin {
-  BTC_USDT = 'BTC/USDT',
-  ETH_USDT = 'ETH/USDT',
-  ADA_USDT = 'ADA/USDT',
-  BCH_USDT = 'BCH/USDT',
-  BSV_USDT = 'BSV/USDT',
-  DOT_USDT = 'DOT/USDT',
-  EOS_USDT = 'EOS/USDT',
-  ETC_USDT = 'ETC/USDT',
-  FIL_USDT = 'FIL/USDT',
-  LINK_USDT = 'LINK/USDT',
-  LTC_USDT = 'LTC/USDT',
-  TRX_USDT = 'TRX/USDT',
-  XRP_USDT = 'XRP/USDT',
+export enum Pair {
+  BTC_USDT = 'BTC-USDT',
+  ETH_USDT = 'ETH-USDT',
+  ADA_USDT = 'ADA-USDT',
+  BCH_USDT = 'BCH-USDT',
+  BSV_USDT = 'BSV-USDT',
+  DOT_USDT = 'DOT-USDT',
+  EOS_USDT = 'EOS-USDT',
+  ETC_USDT = 'ETC-USDT',
+  FIL_USDT = 'FIL-USDT',
+  LINK_USDT = 'LINK-USDT',
+  LTC_USDT = 'LTC-USDT',
+  TRX_USDT = 'TRX-USDT',
+  XRP_USDT = 'XRP-USDT',
 }
 
 export const ToastMessage = {

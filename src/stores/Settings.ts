@@ -85,7 +85,18 @@ export default class Settings {
     this.bchData = data;
   }
   setBtcData(data) {
-    this.btcData = data;
+    const temp = [];
+    for (let i = 0; i < data.length; i++) {
+      temp.push({
+        x: Date.parse(data[i].timestamp),
+        y: data[i].spread_value,
+        spread_ratio: data[i].spread_ratio,
+        far_bid: data[i].far_bid,
+        near_ask: data[i].near_ask,
+      });
+    }
+    console.log('dsafsadfsdafsd', temp);
+    this.btcData = temp;
   }
   setEthData(data) {
     this.ethData = data;

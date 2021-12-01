@@ -15,6 +15,9 @@ import AnnotationsAdvanced from 'highcharts/modules/annotations-advanced.js';
 import PriceIndicator from 'highcharts/modules/price-indicator.js';
 import DragPanes from 'highcharts/modules/drag-panes';
 import { mockUp } from './MockUp/Mockup';
+import { useStores } from 'hooks/useStores';
+import useMount from 'hooks/useMount';
+import { useFetchHistoryData } from 'apis/hooks/mutation/useRequest';
 
 HC_exporting(Highcharts);
 HC_accessibility(Highcharts);
@@ -26,26 +29,37 @@ PriceIndicator(Highcharts);
 DragPanes(Highcharts);
 
 interface PropsData {
-  title: string;
+  pair: string;
   data: any;
   liveData: any;
   socket: any;
   lg?: boolean;
+  fetchHistory?: (pair: string, time: number) => any;
 }
 
 const Chart: FC<PropsData> = observer((props) => {
+  const { settings } = useStores();
   const classes = styles();
-  const { title, data, liveData, socket, lg } = props;
+  const mutateFetchHistoryData = useFetchHistoryData();
+  const { pair, data, liveData, socket, lg, fetchHistory } = props;
   const chartComponent = useRef(null);
   const [indicatorVisible, setIndicatorVisible] = useState<boolean>(false);
   const [isSec, setIsSec] = useState<boolean>(true);
+
+  // useMount(async () => {
+  //   await mutateFetchHistoryData.mutateAsync(fetchHistory(pair, 'sec', 1));
+  //   if (settings.errorMessage?.data) {
+  //     toast.error(settings.errorMessage?.data.message);
+  //     settings.setErrorMessage({});
+  //   }
+  // });
 
   let candleOptions = {
     // rangeSelector: {
     //   selected: 1,
     // },
     title: {
-      text: title,
+      text: pair,
     },
 
     yAxis: [
@@ -146,10 +160,10 @@ const Chart: FC<PropsData> = observer((props) => {
 
   const options = {
     chart: {
-      height: 600,
+      height: 320,
       events: {
         load: function () {
-          chartComponent.current?.chart.showLoading('Loading...');
+          // chartComponent.current?.chart.showLoading('Loading...');
           const series = this.series[0];
           socket.onopen = () => {
             socket.send(JSON.stringify(liveData));
@@ -167,23 +181,11 @@ const Chart: FC<PropsData> = observer((props) => {
               true
             );
           };
-          // setInterval(() => {
-          //   const time = new Date().getTime(),
-          //     spread = Math.round(Math.random() * 1000),
-          //     spread_ratio = Math.round(Math.random() * 1000),
-          //     far_bid = Math.round(Math.random() * 1000),
-          //     near_ask = Math.round(Math.random() * 1000);
-          //   series.addPoint(
-          //     { time, spread, spread_ratio, far_bid, near_ask },
-          //     true,
-          //     true
-          //   );
-          // }, 1000);
         },
       },
     },
     title: {
-      text: title,
+      text: pair,
     },
     exporting: {
       buttons: {
@@ -228,8 +230,9 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 1,
           text: '1s',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(1);
+              await mutateFetchHistoryData.mutateAsync(fetchHistory(pair, 1));
               setIsSec(true);
             },
           },
@@ -239,8 +242,9 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 1,
           text: '1m',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(60);
+              await mutateFetchHistoryData.mutateAsync(fetchHistory(pair, 60));
               setIsSec(false);
             },
           },
@@ -250,8 +254,9 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 5,
           text: '5m',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(300);
+              await mutateFetchHistoryData.mutateAsync(fetchHistory(pair, 300));
               setIsSec(false);
             },
           },
@@ -261,8 +266,9 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 15,
           text: '15m',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(900);
+              await mutateFetchHistoryData.mutateAsync(fetchHistory(pair, 900));
               setIsSec(false);
             },
           },
@@ -272,8 +278,11 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 1,
           text: '1h',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(3600);
+              await mutateFetchHistoryData.mutateAsync(
+                fetchHistory(pair, 3600)
+              );
               setIsSec(false);
             },
           },
@@ -283,8 +292,11 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 4,
           text: '4h',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(14400);
+              await mutateFetchHistoryData.mutateAsync(
+                fetchHistory(pair, 14400)
+              );
               setIsSec(false);
             },
           },
@@ -294,8 +306,11 @@ const Chart: FC<PropsData> = observer((props) => {
           count: 1,
           text: '1d',
           events: {
-            click: () => {
+            click: async () => {
               changeInterval(86400);
+              await mutateFetchHistoryData.mutateAsync(
+                fetchHistory(pair, 86400)
+              );
               setIsSec(false);
             },
           },
@@ -350,18 +365,18 @@ const Chart: FC<PropsData> = observer((props) => {
     tooltip: {
       formatter: function () {
         return (
-          'Open: ' +
-          this.points[0].y +
-          '<br />' +
-          'High: ' +
-          this.points[0].point.options?.far_bid +
-          '<br />' +
-          'Low: ' +
-          this.points[0].point.options?.far_bid +
-          '<br />' +
-          'Close: ' +
-          this.points[0].point.options?.far_bid +
-          '<br />' +
+          // 'Open: ' +
+          // this.points[0].y +
+          // '<br />' +
+          // 'High: ' +
+          // this.points[0].point.options?.far_bid +
+          // '<br />' +
+          // 'Low: ' +
+          // this.points[0].point.options?.far_bid +
+          // '<br />' +
+          // 'Close: ' +
+          // this.points[0].point.options?.far_bid +
+          // '<br />' +
           '스프레드: ' +
           this.points[0].y +
           '<br />' +
@@ -473,23 +488,6 @@ const Chart: FC<PropsData> = observer((props) => {
     }
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     const res = await fetch(
-  //       'https://demo-live-data.highcharts.com/time-rows.json'
-  //     );
-  //     const data = await res.json();
-  //     console.log(data);
-  //     options.series[0].data = mockData;
-  //     const [date, value] = data[0];
-  //     const point = [new Date(date).getTime(), value];
-  //     if (chartComponent.current) {
-  //       chartComponent.current.chart.series[0].addPoint(point, true);
-  //     }
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
-
   // options.yAxis[0].removePlotLine();
   // plotLines.push(
   //   Highcharts.yAxis[0].addPlotLine({
@@ -528,7 +526,7 @@ const Chart: FC<PropsData> = observer((props) => {
   }, [indicatorVisible]);
 
   return (
-    <Grid item md={lg ? 12 : 3}>
+    <Grid item md={lg ? 6 : 3}>
       <HighchartsReact
         ref={chartComponent}
         highcharts={Highcharts}
